@@ -19,9 +19,17 @@ function App() {
 const Row = () => {
 
   const [newWord, setNewWord] = useState('');
+  const [matches, setMatches] = useState(new Array(5));
 
   useEffect(() => {
     console.log(newWord);
+    if(newWord.length === 5 && newWord.toLowerCase() === WordOfTheDay.toLowerCase()) {
+      console.log('you win!');
+    } else if(newWord.length === 5) {
+      console.log ('try another word')
+    } else if(newWord.length > 0) {
+      console.log('keep guessing');
+    }
   }, [newWord])
 
   const handleChange = (character) => {

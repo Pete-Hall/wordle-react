@@ -1,10 +1,10 @@
 .board {
   text-align: center;
-  padding-left: 3rem;
 }
 
 .row {
   display:flex;
+  justify-content: center;
 }
 
 input {
