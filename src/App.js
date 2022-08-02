@@ -56,7 +56,6 @@ const Row = () => {
         return (
           <Cell key={i} handleChange={handleChange} isMatch={matches[i]}/>
         )
-
       })}
     </div>
   );
@@ -69,7 +68,7 @@ const Cell = (props) => {
   }
 
   return (
-    <div className={`cell ${props.isMatch ? 'cell--green': ''}`}>
+    <div className={`${props.isMatch ? 'cell--green': ''}`}>
       <input onChange={handleCellChange} type="text" maxLength={1} className="cell__input"/>
     </div>
   );
