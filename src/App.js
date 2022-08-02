@@ -27,10 +27,24 @@ const Row = () => {
       console.log('you win!');
     } else if(newWord.length === 5) {
       console.log ('try another word')
+      // set matching characters for each index
+      const newMatches = new Array(5);
+      for(let i = 0; i < WordOfTheDay.length; i++) {
+        if(WordOfTheDay[i] === newWord[i].toUpperCase()) {
+          newMatches[i] = true;
+        } else {
+          newMatches[i] = false;
+        }
+      }
+      setMatches(newMatches);
     } else if(newWord.length > 0) {
       console.log('keep guessing');
     }
   }, [newWord])
+
+  useEffect(() => {
+    console.log('matches:', matches);
+  }, [matches])
 
   const handleChange = (character) => {
     setNewWord(newWord + character);
@@ -40,7 +54,7 @@ const Row = () => {
     <div className='row'>
       {[...new Array(5)].map((x, i) => {
         return (
-          <Cell key={i} handleChange={handleChange}/>
+          <Cell key={i} handleChange={handleChange} isMatch={matches[i]}/>
         )
 
       })}
@@ -55,8 +69,8 @@ const Cell = (props) => {
   }
 
   return (
-    <div>
-      <input onChange={handleCellChange} type="text" maxLength={1} />
+    <div className={`cell ${props.isMatch ? 'cell--green': ''}`}>
+      <input onChange={handleCellChange} type="text" maxLength={1} className="cell__input"/>
     </div>
   );
 }
