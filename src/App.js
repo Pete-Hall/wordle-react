@@ -23,12 +23,16 @@ const Row = () => {
 
   useEffect(() => {
     console.log(newWord);
+    const newMatches = new Array(5);
     if(newWord.length === 5 && newWord.toLowerCase() === WordOfTheDay.toLowerCase()) {
       console.log('you win!');
+      for(let i = 0; i < 5; i++) {
+        newMatches[i] = true;
+      }
+      setMatches(newMatches);
     } else if(newWord.length === 5) {
       console.log ('try another word')
       // set matching characters for each index
-      const newMatches = new Array(5);
       for(let i = 0; i < WordOfTheDay.length; i++) {
         if(WordOfTheDay[i] === newWord[i].toUpperCase()) {
           newMatches[i] = true;
