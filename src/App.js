@@ -4,7 +4,9 @@ import './App.css';
 const WordOfTheDay = "GHOST";
 
 function App() {
+
   const [win, setWin] = useState(false);
+
   return (
     <div className="board">
       <h1>Wordle</h1>
@@ -22,6 +24,7 @@ const Row = (props) => {
   const [newWord, setNewWord] = useState('');
   const [matches, setMatches] = useState(new Array(5));
   const [counter, setCounter] = useState(0);
+  const [cellCounter, setCellCounter] = useState(0);
 
   useEffect(() => {
     console.log("row id", props.id);
@@ -54,6 +57,7 @@ const Row = (props) => {
       setMatches(newMatches);
     } else if(newWord.length >= 0) {
       console.log('keep guessing');
+      setCellCounter(cellCounter+1);
       
     }
   }, [newWord])
@@ -70,18 +74,22 @@ const Row = (props) => {
     <div className='row'>
       {[...new Array(5)].map((x, i) => {
         return (
-          <Cell key={i} handleChange={handleChange} isMatch={matches[i]} didWin={props.win} row={props.row} counter={counter}/>
+          <Cell key={i} handleChange={handleChange} isMatch={matches[i]} didWin={props.win} row={props.row} cellID={i} counter={counter} cellCounter={cellCounter}/>
         )
       })}
     </div>
   );
 }
 
+// how to handle delete, how to focus on inputs
+
 const Cell = (props) => {
 
   const handleCellChange = (e) => {
     props.handleChange(e.target.value);
   }
+
+
 
   // disabled where row >= counter
 
@@ -92,7 +100,8 @@ const Cell = (props) => {
         :
         props.row <= props.counter ? <input onChange={handleCellChange} type="text" maxLength={1} className="cell__input" disabled/>
         :
-        <input onChange={handleCellChange} type="text" maxLength={1} className={`cell__input ${props.row}`}/>
+        // if cellID <= cellCounter, function {document.getElementById("myAnchor").focus();} where myAnchor is props.row_props.cellID
+        <input onChange={handleCellChange} type="text" maxLength={1} className={`cell__input ${props.row}_${props.cellID}` } />
       }
     </div>
   );
