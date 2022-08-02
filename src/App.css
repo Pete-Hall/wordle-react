@@ -24,3 +24,7 @@ input {
 .cell--yellow {
   background-color: yellow;
 }
+
+.cell--grey {
+  background-color: lightgrey;
+}

@@ -4,22 +4,24 @@ import './App.css';
 const WordOfTheDay = "GHOST";
 
 function App() {
+  const [win, setWin] = useState(false);
   return (
     <div className="board">
       <h1>Wordle</h1>
-      <Row />
-      <Row />
-      <Row />
-      <Row />
-      <Row />
+      {[...new Array(6)].map((x, i) => {
+        return (
+          <Row key={i} win={win} setWin={setWin}/>
+        )
+      })}
     </div>
   );
 }
 
-const Row = () => {
+const Row = (props) => {
 
   const [newWord, setNewWord] = useState('');
   const [matches, setMatches] = useState(new Array(5));
+  // const [win, setWin] = useState(false);
 
   useEffect(() => {
     console.log(newWord);
@@ -30,6 +32,7 @@ const Row = () => {
         newMatches[i] = true;
       }
       setMatches(newMatches);
+      props.setWin(true);
     } else if(newWord.length === 5) {
       console.log ('try another word')
       // set matching characters for each index
@@ -44,8 +47,9 @@ const Row = () => {
         }
       }
       setMatches(newMatches);
-    } else if(newWord.length > 0) {
+    } else if(newWord.length >= 0) {
       console.log('keep guessing');
+      
     }
   }, [newWord])
 
@@ -61,7 +65,7 @@ const Row = () => {
     <div className='row'>
       {[...new Array(5)].map((x, i) => {
         return (
-          <Cell key={i} handleChange={handleChange} isMatch={matches[i]}/>
+          <Cell key={i} handleChange={handleChange} isMatch={matches[i]} didWin={props.win}/>
         )
       })}
     </div>
@@ -75,8 +79,12 @@ const Cell = (props) => {
   }
 
   return (
-    <div className={`${props.isMatch === true ? 'cell--green': props.isMatch === 'yellow' ? 'cell--yellow' : ''}`}>
-      <input onChange={handleCellChange} type="text" maxLength={1} className="cell__input"/>
+    <div className={`${props.isMatch === true ? 'cell--green': props.isMatch === 'yellow' ? 'cell--yellow' : props.isMatch === false ? 'cell--grey' : ''}`}>
+      {
+        props.didWin ? <input onChange={handleCellChange} type="text" maxLength={1} className="cell__input" disabled/> 
+        :
+        <input onChange={handleCellChange} type="text" maxLength={1} className="cell__input"/>
+      }
     </div>
   );
 }
