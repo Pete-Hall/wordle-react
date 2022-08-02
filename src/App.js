@@ -32,7 +32,10 @@ const Row = () => {
       for(let i = 0; i < WordOfTheDay.length; i++) {
         if(WordOfTheDay[i] === newWord[i].toUpperCase()) {
           newMatches[i] = true;
-        } else {
+        } else if(WordOfTheDay.includes(newWord[i].toUpperCase())) {
+          newMatches[i] = 'yellow';
+        } 
+        else {
           newMatches[i] = false;
         }
       }
@@ -68,7 +71,7 @@ const Cell = (props) => {
   }
 
   return (
-    <div className={`${props.isMatch ? 'cell--green': ''}`}>
+    <div className={`${props.isMatch === true ? 'cell--green': props.isMatch === 'yellow' ? 'cell--yellow' : ''}`}>
       <input onChange={handleCellChange} type="text" maxLength={1} className="cell__input"/>
     </div>
   );
