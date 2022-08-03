@@ -25,7 +25,7 @@ const Row = (props) => {
   const [newWord, setNewWord] = useState('');
   const [matches, setMatches] = useState(new Array(5));
   // let [counter, setCounter] = useState(0);
-  let [cellCounter, setCellCounter] = useState(0);
+  let [cellCounter, setCellCounter] = useState(0); // not using cellCounter or setCellCounter
 
   useEffect(() => {
     console.log("row id", props.id);

@@ -1,3 +1,8 @@
+h1 {
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bolder;
+}
+
 .board {
   text-align: center;
 }
@@ -13,30 +18,31 @@
   height: 4rem;
   text-align: center;
   font-size: 2.5rem;
-  font-weight: 700;
+  font-weight: bold;
   margin: 3px 3px 3px 3px;
   border-style: solid;
+  text-transform: uppercase;
 }
 
 /* https://www.color-hex.com/color-palette/1012607 */
 
 .cell--green {
   background-color: #6ca965;
-  border: 1px solid 6ca965;
+  border: 1px solid #6ca965;
   margin: 3px 3px 3px 3px;
   
 }
 
 .cell--yellow {
   background-color: #c8b653;
-  border: 1px solid c8b653;
+  border: 1px solid #c8b653;
   margin: 3px 3px 3px 3px;
 
 }
 
 .cell--grey {
   background-color: #787c7f;
-  border: 1px solid 787c7f;
+  border: 1px solid #787c7f;
   margin: 3px 3px 3px 3px;
 
 }
