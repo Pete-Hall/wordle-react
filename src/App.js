@@ -97,9 +97,9 @@ const Cell = (props) => {
 
     // If found, focus the next field
     if (nextInput !== null) {
-      console.log(nextInput);
+      // console.log(nextInput);
       nextInput.focus();
-    } else if(nextRow != null) {
+    } else if (nextRow != null) {
       nextRow.focus();
     }
   }
@@ -107,9 +107,9 @@ const Cell = (props) => {
   return (
     <div className={`${props.isMatch === true ? 'cell--green' : props.isMatch === 'yellow' ? 'cell--yellow' : props.isMatch === false ? 'cell--grey' : ''}`}>
       {
-        props.didWin ? <input onChange={handleCellChange} type="text" maxLength={1} className="cell__input" disabled />
+        props.didWin ? <input onChange={handleCellChange} type="text" maxLength={1} className="cell__input disabled" disabled />
           :
-          props.row <= props.counter ? <input onChange={handleCellChange} type="text" maxLength={1} className="cell__input" disabled />
+          props.row <= props.counter ? <input onChange={handleCellChange} type="text" maxLength={1} className="cell__input disabled" disabled />
             :
             props.row === 1 && props.cellID === 0 ? <input onChange={handleCellChange} type="text" maxLength={1} className="cell__input" autoFocus /> // when the page loads, auto focus on the first input
               :

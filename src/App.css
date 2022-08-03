@@ -7,24 +7,39 @@
   justify-content: center;
 }
 
-input {
-  width: 3rem;
-  height: 3rem;
+.cell__input {
+  /* background-color: transparent; */
+  width: 3.75rem;
+  height: 4rem;
   text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 3px 3px 3px 3px;
 }
 
-.cell__input {
-  background-color: transparent;
-}
+/* https://www.color-hex.com/color-palette/1012607 */
 
 .cell--green {
-  background-color: lightgreen;
+  background-color: #6ca965;
+  border: 1px solid 6ca965;
+  margin: 3px 3px 3px 3px;
+  
 }
 
 .cell--yellow {
-  background-color: yellow;
+  background-color: #c8b653;
+  border: 1px solid c8b653;
+  margin: 3px 3px 3px 3px;
+
 }
 
 .cell--grey {
-  background-color: lightgrey;
+  background-color: #787c7f;
+  border: 1px solid 787c7f;
+  margin: 3px 3px 3px 3px;
+
+}
+
+.disabled {
+  color: white;
 }
