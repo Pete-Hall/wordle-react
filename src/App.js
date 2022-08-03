@@ -6,13 +6,14 @@ const WordOfTheDay = "GHOST";
 function App() {
 
   const [win, setWin] = useState(false);
+  let [counter, setCounter] = useState(0);
 
   return (
     <div className="board">
       <h1>Wordle</h1>
       {[...new Array(6)].map((x, i) => {
         return (
-          <Row key={i} win={win} setWin={setWin} row={i+1}/>
+          <Row key={i} win={win} setWin={setWin} row={i+1} counter={counter} setCounter={setCounter}/>
         )
       })}
     </div>
@@ -23,8 +24,8 @@ const Row = (props) => {
 
   const [newWord, setNewWord] = useState('');
   const [matches, setMatches] = useState(new Array(5));
-  const [counter, setCounter] = useState(0);
-  const [cellCounter, setCellCounter] = useState(0);
+  // let [counter, setCounter] = useState(0);
+  let [cellCounter, setCellCounter] = useState(0);
 
   useEffect(() => {
     console.log("row id", props.id);
@@ -34,15 +35,15 @@ const Row = (props) => {
     console.log(newWord);
     const newMatches = new Array(5);
     if(newWord.length === 5 && newWord.toLowerCase() === WordOfTheDay.toLowerCase()) {
-      console.log('you win!');
+      console.log('you win!:', newWord);
       for(let i = 0; i < 5; i++) {
         newMatches[i] = true;
       }
       setMatches(newMatches);
       props.setWin(true);
     } else if(newWord.length === 5) {
-      console.log ('try another word')
-      setCounter(counter+1);
+      console.log ('try another word:', newWord);
+      props.setCounter(props.counter+1);
       // set matching characters for each index
       for(let i = 0; i < WordOfTheDay.length; i++) {
         if(WordOfTheDay[i] === newWord[i].toUpperCase()) {
@@ -57,24 +58,26 @@ const Row = (props) => {
       setMatches(newMatches);
     } else if(newWord.length >= 0) {
       console.log('keep guessing');
-      setCellCounter(cellCounter+1);
       
     }
   }, [newWord])
 
   useEffect(() => {
     console.log('matches:', matches);
+    console.log('counter:', props.counter);
+
   }, [matches])
 
   const handleChange = (character) => {
     setNewWord(newWord + character);
+    // on delete key, delete character at the last index (newWord[length-1])
   }
 
   return (
     <div className='row'>
       {[...new Array(5)].map((x, i) => {
         return (
-          <Cell key={i} handleChange={handleChange} isMatch={matches[i]} didWin={props.win} row={props.row} cellID={i} counter={counter} cellCounter={cellCounter}/>
+          <Cell key={i} handleChange={handleChange} isMatch={matches[i]} didWin={props.win} row={props.row} cellID={i} counter={props.counter} cellCounter={cellCounter}/>
         )
       })}
     </div>
@@ -85,13 +88,22 @@ const Row = (props) => {
 
 const Cell = (props) => {
 
-  const handleCellChange = (e) => {
+  const handleCellChange = (e) => { // https://www.geeksforgeeks.org/how-to-focus-on-the-next-field-input-in-reactjs/
     props.handleChange(e.target.value);
+    const nextInput = document.querySelector(
+      `.cell_${props.cellID + 1}`
+    );
+    
+    // If found, focus the next field
+    if (nextInput !== null) {
+      console.log(nextInput);
+      nextInput.focus();
+  }
   }
 
-
-
-  // disabled where row >= counter
+  // after 2 rows of complete, the next focus goes back to the 2nd row
+    // doesn't disable after 1st row
+    // counter is not incrementing!
 
   return (
     <div className={`${props.isMatch === true ? 'cell--green': props.isMatch === 'yellow' ? 'cell--yellow' : props.isMatch === false ? 'cell--grey' : ''}`}>
@@ -100,8 +112,13 @@ const Cell = (props) => {
         :
         props.row <= props.counter ? <input onChange={handleCellChange} type="text" maxLength={1} className="cell__input" disabled/>
         :
+        props.row === 1 && props.cellID === 0 ? <input onChange={handleCellChange} type="text" maxLength={1} className="cell__input" autoFocus/>
+        :
+        // if row === 2 and cellID === 0 and row < counter ? use a ref??
+        props.row === 2 && props.cellID === 0 && props.row < props.counter ? <input onChange={handleCellChange} type="text" maxLength={1} className="cell__input" />
+        :
         // if cellID <= cellCounter, function {document.getElementById("myAnchor").focus();} where myAnchor is props.row_props.cellID
-        <input onChange={handleCellChange} type="text" maxLength={1} className={`cell__input ${props.row}_${props.cellID}` } />
+        <input onChange={handleCellChange} type="text" maxLength={1} className={`cell__input row_${props.row} cell_${props.cellID}` } />
       }
     </div>
   );
