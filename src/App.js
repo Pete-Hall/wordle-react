@@ -77,7 +77,7 @@ const Row = (props) => {
     <div className='row'>
       {[...new Array(5)].map((x, i) => {
         return (
-          <Cell key={i} handleChange={handleChange} isMatch={matches[i]} didWin={props.win} row={props.row} cellID={i} counter={props.counter} cellCounter={cellCounter} />
+          <Cell key={i} handleChange={handleChange} isMatch={matches[i]} didWin={props.win} row={props.row} cellID={i} counter={props.counter} cellCounter={cellCounter} /> // not using counter or cellCounter in the props as of now
         )
       })}
     </div>
@@ -112,11 +112,10 @@ const Cell = (props) => {
           props.row <= props.counter ? <input onChange={handleCellChange} type="text" maxLength={1} className={`cell__input disabled ${props.isMatch === true ? 'cell--green' : props.isMatch === 'yellow' ? 'cell--yellow' : props.isMatch === false ? 'cell--grey' : ''}`} disabled />
             :
             props.row === 1 && props.cellID === 0 ? <input onChange={handleCellChange} type="text" maxLength={1} className={`cell__input ${props.isMatch === true ? 'cell--green' : props.isMatch === 'yellow' ? 'cell--yellow' : props.isMatch === false ? 'cell--grey' : ''}`} autoFocus /> // when the page loads, auto focus on the first input
-              :
-              // if row === 2 and cellID === 0 and row < counter ? use a ref??
-              props.row === 2 && props.cellID === 0 && props.row < props.counter ? <input onChange={handleCellChange} type="text" maxLength={1} className={`cell__input ${props.isMatch === true ? 'cell--green' : props.isMatch === 'yellow' ? 'cell--yellow' : props.isMatch === false ? 'cell--grey' : ''}`} />
+              // :
+              // // if row === 2 and cellID === 0 and row < counter ? use a ref??
+              // props.row === 2 && props.cellID === 0 && props.row < props.counter ? <input onChange={handleCellChange} type="text" maxLength={1} className={`cell__input ${props.isMatch === true ? 'cell--green' : props.isMatch === 'yellow' ? 'cell--yellow' : props.isMatch === false ? 'cell--grey' : ''}`} />
                 :
-                // if cellID <= cellCounter, function {document.getElementById("myAnchor").focus();} where myAnchor is props.row_props.cellID
                 <input onChange={handleCellChange} type="text" maxLength={1} className={`cell__input row_${props.row} cell_${props.cellID}`} />
       }
     </div>
